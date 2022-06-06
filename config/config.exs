@@ -10,6 +10,10 @@ use Mix.Config
 config :delivery,
   ecto_repos: [Delivery.Repo]
 
+config :delivery, Delivery.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id]
+
 # Configures the endpoint
 config :delivery, DeliveryWeb.Endpoint,
   url: [host: "localhost"],
