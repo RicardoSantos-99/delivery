@@ -1,20 +1,14 @@
 defmodule Delivery.UserTest do
   use Delivery.DataCase, async: true
 
+  import Delivery.Factory
+
   alias Delivery.User
   alias Ecto.Changeset
 
   describe "changeset/2" do
     test "when all params are valid, returns a valid changeset" do
-      params = %{
-        age: 27,
-        address: "123 Main St",
-        cep: "12312312",
-        cpf: "12312312312",
-        email: "john@doe",
-        password: "123123",
-        name: "John"
-      }
+      params = build(:user_params)
 
       response = User.changeset(params)
 
@@ -22,15 +16,7 @@ defmodule Delivery.UserTest do
     end
 
     test "when updating a changeset, return a valid changeset with the given changes" do
-      params = %{
-        age: 27,
-        address: "123 Main St",
-        cep: "12312312",
-        cpf: "12312312312",
-        email: "john@doe",
-        password: "123123",
-        name: "John"
-      }
+      params = build(:user_params)
 
       update_params = %{
         age: 24,
@@ -46,15 +32,7 @@ defmodule Delivery.UserTest do
     end
 
     test "when there are some error, returns an invalid changeset" do
-      params = %{
-        age: 15,
-        address: "123 Main St",
-        cep: "12312312",
-        cpf: "12312312312",
-        email: "john@doe",
-        password: "11",
-        name: "John"
-      }
+      params = build(:user_params, %{age: 15, password: "123"})
 
       response = User.changeset(params)
 
