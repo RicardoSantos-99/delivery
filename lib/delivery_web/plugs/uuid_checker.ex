@@ -13,7 +13,7 @@ defmodule DeliveryWeb.Plugs.UUIDChecker do
     end
   end
 
-  def call(conn), do: conn
+  def call(conn, _opts), do: conn
 
   defp render_error(conn) do
     body = Jason.encode!(%{message: "Invalid UUID"})
