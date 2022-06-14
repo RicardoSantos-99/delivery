@@ -43,7 +43,7 @@ defmodule DeliveryWeb.UsersControllerTest do
         |> post(Routes.users_path(conn, :create, params))
         |> json_response(:bad_request)
 
-      expect_response = %{
+      _expect_response = %{
         "message" => %{
           "address" => ["can't be blank"],
           "age" => ["can't be blank"],
@@ -54,6 +54,21 @@ defmodule DeliveryWeb.UsersControllerTest do
       }
 
       assert expect_response = response
+    end
+  end
+
+  describe "delete/2" do
+    test "when there is a user with the given id, deletes the user", %{conn: conn} do
+      id = "1ba8cfa7-c584-489a-8dd0-c16740d7f9ae"
+
+      insert(:user)
+
+      response =
+        conn
+        |> delete(Routes.users_path(conn, :delete, id))
+        |> response(:no_content)
+
+      assert response == ""
     end
   end
 end
