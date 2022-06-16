@@ -3,6 +3,7 @@ defmodule Delivery.Item do
   import Ecto.Changeset
 
   alias Ecto.Enum
+  alias Delivery.Order
 
   @primary_key {:id, :binary_id, autogenerate: true}
 
@@ -16,6 +17,8 @@ defmodule Delivery.Item do
     field :description, :string
     field :price, :decimal
     field :photo, :string
+
+    many_to_many :orders, Order, join_through: "orders_items"
 
     timestamps()
   end
