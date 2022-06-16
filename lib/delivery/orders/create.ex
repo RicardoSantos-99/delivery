@@ -1,43 +1,17 @@
 defmodule Delivery.Orders.Create do
   import Ecto.Query
   alias Delivery.{Error, Repo, Order, Item}
+  alias Delivery.Orders.ValidateAndMultiplyItems
 
-  def call(params) do
-    params
-    |> fetch_items()
-    |> handle_items(params)
-  end
-
-  def fetch_items(%{"items" => items_params}) do
+  def call(%{"items" => items_params} = params) do
     items_ids = Enum.map(items_params, fn item -> item["id"] end)
 
     query = from item in Item, where: item.id in ^items_ids
 
     query
     |> Repo.all()
-    |> validade_and_multiply_items(items_ids, items_params)
-  end
-
-  defp validade_and_multiply_items(items, items_ids, items_params) do
-    items_map = Map.new(items, fn item -> {item.id, item} end)
-
-    items_ids
-    |> Enum.map(fn id -> {id, Map.get(items_map, id)} end)
-    |> Enum.any?(fn {_id, value} -> is_nil(value) end)
-    |> multiply_items(items_map, items_params)
-  end
-
-  defp multiply_items(true, _items, _items_params), do: {:error, "invalid ids!"}
-
-  defp multiply_items(false, items, items_params) do
-    items =
-      Enum.reduce(items_params, [], fn %{"id" => id, "quantity" => quantity}, acc ->
-        item = Map.get(items, id)
-
-        acc ++ List.duplicate(item, quantity)
-      end)
-
-    {:ok, items}
+    |> ValidateAndMultiplyItems.call(items_ids, items_params)
+    |> handle_items(params)
   end
 
   defp handle_items({:error, result}, _params), do: {:error, Error.build(:bad_request, result)}
