@@ -13,7 +13,7 @@ defmodule Delivery.ViaCep.Client do
     |> handle_get()
   end
 
-  defp handle_get({:ok, %Env{status: 200, body: %{"erro" => true}}}) do
+  defp handle_get({:ok, %Env{status: 200, body: %{"erro" => "true"}}}) do
     {:error, Error.build(:not_found, "CEP not found!")}
   end
 
