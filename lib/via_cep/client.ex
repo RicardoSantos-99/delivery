@@ -13,17 +13,19 @@ defmodule Delivery.ViaCep.Client do
     |> handle_get()
   end
 
-  def handle_get({:ok, %Env{status: 200, body: %{"error" => true}}}) do
+  defp handle_get({:ok, %Env{status: 200, body: %{"erro" => true}}}) do
     {:error, Error.build(:not_found, "CEP not found!")}
   end
 
-  def handle_get({:ok, %Env{status: 200, body: body}}), do: {:ok, body}
+  defp handle_get({:ok, %Env{status: 200, body: body}}) do
+    {:ok, body}
+  end
 
-  def handle_get({:ok, %Env{status: 400, body: _body}}) do
+  defp handle_get({:ok, %Env{status: 400, body: _body}}) do
     {:error, Error.build(:bad_request, "Invalid CEP!")}
   end
 
-  def handle_get({:error, reason}) do
+  defp handle_get({:error, reason}) do
     {:error, Error.build(:bad_request, reason)}
   end
 end
