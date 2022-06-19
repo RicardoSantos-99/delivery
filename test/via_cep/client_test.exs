@@ -1,7 +1,9 @@
 defmodule Delivery.ViaCep.ClientTest do
   use ExUnit.Case, async: true
 
+  alias Plug.Conn
   alias Delivery.ViaCep.Client
+  alias Delivery.Error
 
   describe "get_cep_info/1" do
     setup do
@@ -30,8 +32,8 @@ defmodule Delivery.ViaCep.ClientTest do
 
       Bypass.expect(bypass, "GET", "#{cep}/json/", fn conn ->
         conn
-        |> Plug.Conn.put_resp_header("content-Type", "application/json")
-        |> Plug.Conn.resp(200, body)
+        |> Conn.put_resp_header("content-Type", "application/json")
+        |> Conn.resp(200, body)
       end)
 
       response = Client.get_cep_info(url, cep)
@@ -50,6 +52,56 @@ defmodule Delivery.ViaCep.ClientTest do
            "siafi" => "7107",
            "uf" => "SP"
          }}
+
+      assert response == expect_response
+    end
+
+    test "when there is invalid cep, returns an error", %{bypass: bypass} do
+      cep = "123"
+
+      url = endpoint_url(bypass.port)
+
+      Bypass.expect(bypass, "GET", "#{cep}/json/", fn conn ->
+        Conn.resp(conn, 400, "")
+      end)
+
+      response = Client.get_cep_info(url, cep)
+
+      expect_response = {:error, %Error{result: "Invalid CEP!", status: :bad_request}}
+
+      assert response == expect_response
+    end
+
+    test "when the cep was not found, returns an error", %{bypass: bypass} do
+      cep = "00000000"
+
+      url = endpoint_url(bypass.port)
+
+      body = ~s({"erro": "true"})
+
+      Bypass.expect(bypass, "GET", "#{cep}/json/", fn conn ->
+        conn
+        |> Conn.put_resp_header("content-Type", "application/json")
+        |> Conn.resp(200, body)
+      end)
+
+      response = Client.get_cep_info(url, cep)
+
+      expect_response = {:error, %Error{result: "CEP not found!", status: :not_found}}
+
+      assert response == expect_response
+    end
+
+    test "when there is a generic error, returns an error", %{bypass: bypass} do
+      cep = "00000000"
+
+      url = endpoint_url(bypass.port)
+
+      Bypass.down(bypass)
+
+      response = Client.get_cep_info(url, cep)
+
+      expect_response = {:error, %Error{result: :econnrefused, status: :bad_request}}
 
       assert response == expect_response
     end
