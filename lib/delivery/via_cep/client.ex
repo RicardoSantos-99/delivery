@@ -1,8 +1,11 @@
 defmodule Delivery.ViaCep.Client do
   use Tesla
 
-  alias Tesla.Env
   alias Delivery.Error
+  alias Delivery.ViaCep.Behaviour
+  alias Tesla.Env
+
+  @behaviour Behaviour
 
   @base_url "https://viacep.com.br/ws/"
   plug Tesla.Middleware.JSON
