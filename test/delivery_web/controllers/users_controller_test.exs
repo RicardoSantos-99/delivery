@@ -2,6 +2,9 @@ defmodule DeliveryWeb.UsersControllerTest do
   use DeliveryWeb.ConnCase, async: true
 
   import Delivery.Factory
+  import Mox
+
+  alias Delivery.ViaCep.ClientMock
 
   describe "create/2" do
     test "when all params are valid, returns a valid user", %{conn: conn} do
@@ -14,6 +17,10 @@ defmodule DeliveryWeb.UsersControllerTest do
         "password" => "123123123",
         "name" => "John"
       }
+
+      expect(ClientMock, :get_cep_info, fn _cep ->
+        {:ok, build(:cep_info)}
+      end)
 
       response =
         conn
@@ -53,7 +60,7 @@ defmodule DeliveryWeb.UsersControllerTest do
         }
       }
 
-      assert expect_response = response
+      assert _expect_response = response
     end
   end
 

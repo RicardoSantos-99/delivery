@@ -10,6 +10,8 @@ use Mix.Config
 config :delivery,
   ecto_repos: [Delivery.Repo]
 
+config :delivery, Delivery.Users.Create, via_cep_adapter: Delivery.ViaCep.Client
+
 config :delivery, Delivery.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]

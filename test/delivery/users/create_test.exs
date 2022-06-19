@@ -1,14 +1,20 @@
 defmodule Delivery.Users.CreateTest do
   use Delivery.DataCase, async: true
 
+  import Mox
+  import Delivery.Factory
+
   alias Delivery.{Error, User}
   alias Delivery.Users.Create
-
-  import Delivery.Factory
+  alias Delivery.ViaCep.ClientMock
 
   describe "call/1" do
     test "when all params are valid, returns a valid user" do
       params = build(:user_params)
+
+      expect(ClientMock, :get_cep_info, fn _cep ->
+        {:ok, build(:cep_info)}
+      end)
 
       response = Create.call(params)
 

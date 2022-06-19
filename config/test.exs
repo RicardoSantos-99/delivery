@@ -12,6 +12,8 @@ config :delivery, Delivery.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
+config :delivery, Delivery.Users.Create, via_cep_adapter: Delivery.ViaCep.ClientMock
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :delivery, DeliveryWeb.Endpoint,

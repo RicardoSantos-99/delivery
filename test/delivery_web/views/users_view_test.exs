@@ -4,7 +4,6 @@ defmodule DeliveryWeb.UsersViewTest do
   import Phoenix.View
   import Delivery.Factory
 
-  alias Delivery.User
   alias DeliveryWeb.UsersView
 
   test "renders create.json" do
