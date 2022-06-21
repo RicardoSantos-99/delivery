@@ -8,11 +8,13 @@ defmodule DeliveryWeb.UsersViewTest do
 
   test "renders create.json" do
     user = build(:user)
+    token = "falsetoken"
 
-    response = render(UsersView, "create.json", user: user)
+    response = render(UsersView, "create.json", user: user, token: token)
 
     assert %{
              message: "User created!",
+             token: "falsetoken",
              user: %Delivery.User{
                address: "123 Main St",
                age: 27,
