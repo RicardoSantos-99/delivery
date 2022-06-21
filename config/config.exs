@@ -21,6 +21,10 @@ config :delivery, DeliveryWeb.Auth.Guardian,
   issuer: "delivery",
   secret_key: "pc/OfCvXR4sK4858INV8BmjoqXGDzg/Km0N4bJLVcBbK+sUerPaLtf6yp0w/IXRE"
 
+config :delivery, DeliveryWeb.Auth.Pipeline,
+  module: DeliveryWeb.Auth.Guardian,
+  error_handler: DeliveryWeb.Auth.ErrorHandler
+
 # Configures the endpoint
 config :delivery, DeliveryWeb.Endpoint,
   url: [host: "localhost"],
