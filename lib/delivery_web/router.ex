@@ -13,6 +13,7 @@ defmodule DeliveryWeb.Router do
 
     get "/", WelcomeController, :index
 
+    post "/users/signin", UsersController, :sign_in
     resources "/users", UsersController, except: [:new, :edit]
     resources "/items", ItemsController, except: [:new, :edit]
     resources "/orders", OrdersController, except: [:new, :edit]
