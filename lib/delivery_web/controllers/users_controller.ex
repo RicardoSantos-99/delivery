@@ -2,15 +2,16 @@ defmodule DeliveryWeb.UsersController do
   use DeliveryWeb, :controller
 
   alias Delivery.User
-  alias DeliveryWeb.FallbackController
+  alias DeliveryWeb.{Auth.Guardian, FallbackController}
 
   action_fallback FallbackController
 
   def create(conn, params) do
-    with {:ok, %User{} = user} <- Delivery.create_user(params) do
+    with {:ok, %User{} = user} <- Delivery.create_user(params),
+         {:ok, token, _claims} <- Guardian.encode_and_sign(user) do
       conn
       |> put_status(:created)
-      |> render("create.json", user: user)
+      |> render("create.json", token: token, user: user)
     end
   end
 

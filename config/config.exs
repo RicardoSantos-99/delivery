@@ -16,6 +16,11 @@ config :delivery, Delivery.Repo,
   migration_primary_key: [type: :binary_id],
   migration_foreign_key: [type: :binary_id]
 
+# Secret key. You can use `mix guardian.gen.secret` to get one
+config :delivery, DeliveryWeb.Auth.Guardian,
+  issuer: "delivery",
+  secret_key: "pc/OfCvXR4sK4858INV8BmjoqXGDzg/Km0N4bJLVcBbK+sUerPaLtf6yp0w/IXRE"
+
 # Configures the endpoint
 config :delivery, DeliveryWeb.Endpoint,
   url: [host: "localhost"],
