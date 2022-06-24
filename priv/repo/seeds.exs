@@ -9,3 +9,38 @@
 #
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
+
+alias Delivery.{Repo, User, Order, Item}
+
+%{password_hash: hash} = Pbkdf2.add_hash("123123")
+
+Repo.insert!(%User{
+  cpf: "12312312312",
+  email: "johndoe@com.example",
+  name: "johndoe",
+  address: "Rua dos bobo",
+  age: 22,
+  cep: "07944040",
+  password_hash: hash
+})
+
+Repo.insert!(%Item{
+  category: :drink,
+  description: "suco de batata",
+  price: Decimal.new("12.00"),
+  photo: "/priv/photos/fruta.png"
+})
+
+Repo.insert!(%Item{
+  category: :drink,
+  description: "suco de fruta",
+  price: Decimal.new("12.00"),
+  photo: "/priv/photos/fruta.png"
+})
+
+Repo.insert!(%Item{
+  category: :drink,
+  description: "suco de limoes",
+  price: Decimal.new("12.00"),
+  photo: "/priv/photos/fruta.png"
+})
