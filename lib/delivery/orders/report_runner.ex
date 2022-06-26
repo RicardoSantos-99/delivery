@@ -13,6 +13,7 @@ defmodule Delivery.Orders.ReportRunner do
   # SERVER
   @impl true
   def init(state) do
+    Logger.info("Report Runner started")
     schedule_report_generation()
 
     {:ok, state}
@@ -21,6 +22,7 @@ defmodule Delivery.Orders.ReportRunner do
   # RECEBE QUALQUER TIPO DE MENSAGEM
   @impl true
   def handle_info(:generate, state) do
+    Logger.info("Generating report...")
     Report.create()
     schedule_report_generation()
 
@@ -28,6 +30,6 @@ defmodule Delivery.Orders.ReportRunner do
   end
 
   def schedule_report_generation do
-    Process.send_after(self(), :generate, 1000 * 60 * 60 * 5)
+    Process.send_after(self(), :generate, 1000 * 60)
   end
 end
