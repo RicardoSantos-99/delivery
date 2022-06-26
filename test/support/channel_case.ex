@@ -17,6 +17,8 @@ defmodule DeliveryWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       # Import conveniences for testing with channels
@@ -29,10 +31,10 @@ defmodule DeliveryWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Delivery.Repo)
+    :ok = Sandbox.checkout(Delivery.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Delivery.Repo, {:shared, self()})
+      Sandbox.mode(Delivery.Repo, {:shared, self()})
     end
 
     :ok

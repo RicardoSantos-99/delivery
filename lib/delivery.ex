@@ -1,11 +1,9 @@
 defmodule Delivery do
   alias Delivery.Items.Create, as: ItemCreate
-
   alias Delivery.Orders.Create, as: OrderCreate
-
   alias Delivery.Users.Create, as: UserCreate
-  alias Delivery.Users.Get, as: UserGet
   alias Delivery.Users.Delete, as: UserDelete
+  alias Delivery.Users.Get, as: UserGet
   alias Delivery.Users.Update, as: UserUpdate
 
   defdelegate create_user(params), to: UserCreate, as: :call

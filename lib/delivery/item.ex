@@ -2,8 +2,8 @@ defmodule Delivery.Item do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Ecto.Enum
   alias Delivery.Order
+  alias Ecto.Enum
 
   @primary_key {:id, :binary_id, autogenerate: true}
 

@@ -1,9 +1,9 @@
 defmodule Delivery.ViaCep.ClientTest do
   use ExUnit.Case, async: true
 
-  alias Plug.Conn
-  alias Delivery.ViaCep.Client
   alias Delivery.Error
+  alias Delivery.ViaCep.Client
+  alias Plug.Conn
 
   describe "get_cep_info/1" do
     setup do

@@ -2,8 +2,8 @@ defmodule Delivery.User do
   use Ecto.Schema
   import Ecto.Changeset
 
-  alias Ecto.Changeset
   alias Delivery.Order
+  alias Ecto.Changeset
 
   @primary_key {:id, :binary_id, autogenerate: true}
 

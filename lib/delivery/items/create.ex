@@ -1,5 +1,5 @@
 defmodule Delivery.Items.Create do
-  alias Delivery.{Error, Repo, Item}
+  alias Delivery.{Error, Item, Repo}
 
   def call(params) do
     params

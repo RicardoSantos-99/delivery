@@ -16,6 +16,9 @@ defmodule Delivery.DataCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+  alias Ecto.Changeset
+
   using do
     quote do
       alias Delivery.Repo
@@ -28,10 +31,10 @@ defmodule Delivery.DataCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Delivery.Repo)
+    :ok = Sandbox.checkout(Delivery.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(Delivery.Repo, {:shared, self()})
+      Sandbox.mode(Delivery.Repo, {:shared, self()})
     end
 
     :ok
@@ -46,7 +49,7 @@ defmodule Delivery.DataCase do
 
   """
   def errors_on(changeset) do
-    Ecto.Changeset.traverse_errors(changeset, fn {message, opts} ->
+    Changeset.traverse_errors(changeset, fn {message, opts} ->
       Regex.replace(~r"%{(\w+)}", message, fn _, key ->
         opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
       end)

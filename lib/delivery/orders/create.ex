@@ -1,6 +1,6 @@
 defmodule Delivery.Orders.Create do
   import Ecto.Query
-  alias Delivery.{Error, Repo, Order, Item}
+  alias Delivery.{Error, Item, Order, Repo}
   alias Delivery.Orders.ValidateAndMultiplyItems
 
   def call(%{"items" => items_params} = params) do

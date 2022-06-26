@@ -1,6 +1,6 @@
 defmodule Delivery.Orders.Report do
   import Ecto.Query
-  alias Delivery.{Repo, Order, Item}
+  alias Delivery.{Item, Order, Repo}
 
   alias Delivery.Orders.TotalPrice
 
