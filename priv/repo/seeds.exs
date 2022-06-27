@@ -53,9 +53,9 @@ order = %Order{
   payment_method: :credit_card
 }
 
-%{id: user_id} = Repo.insert!(user)
+%User{id: user_id} = Repo.insert!(user)
+
 Repo.insert!(item1)
 Repo.insert!(item2)
 Repo.insert!(item2)
-
 Repo.insert!(order)
