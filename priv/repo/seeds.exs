@@ -45,6 +45,15 @@ item3 = %Item{
   photo: "/priv/photos/fruta.png"
 }
 
+IO.puts("Creating user...")
+%User{id: user_id} = Repo.insert!(user)
+
+IO.puts("Creating items...")
+
+Repo.insert!(item1)
+Repo.insert!(item2)
+Repo.insert!(item2)
+
 order = %Order{
   user_id: user_id,
   items: [item1, item2, item3],
@@ -53,9 +62,5 @@ order = %Order{
   payment_method: :credit_card
 }
 
-%User{id: user_id} = Repo.insert!(user)
-
-Repo.insert!(item1)
-Repo.insert!(item2)
-Repo.insert!(item2)
+IO.puts("Creating orders...")
 Repo.insert!(order)
