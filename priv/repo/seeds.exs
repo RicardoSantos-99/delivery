@@ -14,7 +14,7 @@ alias Delivery.{Repo, User, Order, Item}
 
 %{password_hash: hash} = Pbkdf2.add_hash("123123")
 
-Repo.insert!(%User{
+user = %User{
   cpf: "12312312312",
   email: "johndoe@com.example",
   name: "johndoe",
@@ -22,25 +22,40 @@ Repo.insert!(%User{
   age: 22,
   cep: "07944040",
   password_hash: hash
-})
+}
 
-Repo.insert!(%Item{
+item1 = %Item{
   category: :drink,
   description: "suco de batata",
   price: Decimal.new("12.00"),
   photo: "/priv/photos/fruta.png"
-})
+}
 
-Repo.insert!(%Item{
+item2 = %Item{
   category: :drink,
   description: "suco de fruta",
   price: Decimal.new("12.00"),
   photo: "/priv/photos/fruta.png"
-})
+}
 
-Repo.insert!(%Item{
+item3 = %Item{
   category: :drink,
   description: "suco de limoes",
   price: Decimal.new("12.00"),
   photo: "/priv/photos/fruta.png"
-})
+}
+
+order = %Order{
+  user_id: user_id,
+  items: [item1, item2, item3],
+  address: "Rua dos bobo",
+  comments: "lero lero",
+  payment_method: :credit_card
+}
+
+%{id: user_id} = Repo.insert!(user)
+Repo.insert!(item1)
+Repo.insert!(item2)
+Repo.insert!(item2)
+
+Repo.insert!(order)
