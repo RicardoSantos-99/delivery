@@ -1,4 +1,4 @@
-# Delivery
+# Delivery [![codecov](https://codecov.io/gh/RicardoSantos-99/delivery/branch/master/graph/badge.svg?token=O6FQ4BNEEH)](https://codecov.io/gh/RicardoSantos-99/delivery)
 
 To start your Phoenix server:
 
