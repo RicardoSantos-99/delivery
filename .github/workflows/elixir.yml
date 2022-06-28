@@ -79,7 +79,7 @@ jobs:
         with:
           python-version: 3.8.1
 
-      - uses: mhanberg/gigalixir-action@<current release>
+      - uses: mhanberg/gigalixir-action@v0.4.0
         with:
           GIGALIXIR_APP: twin-unlawful-harborseal # Feel free to also put this in your secrets
           GIGALIXIR_CLEAN: true # defaults to false
